@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: dm-db
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: dumbmerch
+    ports:
+      - "5432:5432"
+    restart: on-failure
+  go-be:
+    container_name: dm-be
+    image: dumb-be:1
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    restart: on-failure
+    
